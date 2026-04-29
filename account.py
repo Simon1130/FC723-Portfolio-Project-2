@@ -79,6 +79,7 @@ class Account:
         return output
     
     def _2scompliment_to_decimal(binary):
+        binary = str(binary)
         if binary[0] == "0":
             return binary_to_decimal(binary)
         else:
