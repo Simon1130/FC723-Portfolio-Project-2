@@ -33,6 +33,7 @@ class Account:
                 n //=2
                 ans.append(str(1))
                 
+                
         ans.reverse()
         ans = ''.join(ans)
         return ans
@@ -47,6 +48,7 @@ class Account:
 
             power += 1
         return ans
+    
     def dec_to_32bit2scompliment(money):
         
         if money < 0 :
@@ -67,14 +69,13 @@ class Account:
                     
             plus1 = binary_to_decimal(swapped) +1
             output = decimal_to_binary(plus1)
-            
-            while len(output) < 32 :
-                output = '0' + str(output)
+
             
         else:            
-            first_bin = decimal_to_binary(money)
-            while len(first_bin) < 32 :
-                output = '0' + str(first_bin)
+            output = decimal_to_binary(money)
+            
+        while len(output) < 32 :
+            output = '0' + str(output)
             
         return output
     
@@ -103,6 +104,6 @@ class Account:
     def check_balance(self):
         
     def deposit_money(self, money):
-        
+    
     def withdraw_money(self, money):
         
