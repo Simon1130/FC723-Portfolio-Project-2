@@ -7,14 +7,14 @@ Created on Tue Apr 28 20:53:12 2026
 """
 
 class Account:
-    def __init__(self, username, password, binary_balance, num_tries):
+    def __init__(self, username, password, initial_balance):
         self.username = username
         self.password = password
-        self.binary_balance = binary_balance
-        self.num_tries = num_tries
+        self.binary_balance = self.dec_to_32bit2scompliment(initial_balance)
+        self.num_tries = 0
         self.is_locked = False
         
-    def decimal_to_binary(n):
+    def decimal_to_binary(self, n):
     
         if n == 0:
             return "0"
@@ -38,7 +38,7 @@ class Account:
         ans = ''.join(ans)
         return ans
     
-    def binary_to_decimal(n):
+    def binary_to_decimal(self, n):
         ans = 0
         power = 0
         
@@ -49,13 +49,13 @@ class Account:
             power += 1
         return ans
     
-    def dec_to_32bit2scompliment(money):
+    def dec_to_32bit2scompliment(self, money):
         
         if money < 0 :
             money *= -1
 #
             
-            first_bin = decimal_to_binary(money)
+            first_bin = self.decimal_to_binary(money)
             while len(first_bin) < 32 :
                 first_bin = '0' + str(first_bin)
             
@@ -67,25 +67,25 @@ class Account:
                 elif bit == '1' :
                     swapped += '0'
                     
-            plus1 = binary_to_decimal(swapped) +1
-            output = decimal_to_binary(plus1)
+            plus1 = self.binary_to_decimal(swapped) +1
+            output = self.decimal_to_binary(plus1)
 
             
         else:            
-            output = decimal_to_binary(money)
+            output = self.decimal_to_binary(money)
             
         while len(output) < 32 :
             output = '0' + str(output)
             
         return output
     
-    def _2scompliment_to_decimal(binary):
+    def _2scompliment_to_decimal(self, binary):
         binary = str(binary)
         if binary[0] == "0":
-            return binary_to_decimal(binary)
+            return self.binary_to_decimal(binary)
         else:
-            first_minus1 = binary_to_decimal(binary) - 1
-            minus1_to_bin = decimal_to_binary(first_minus1)
+            first_minus1 = self.binary_to_decimal(binary) - 1
+            minus1_to_bin = self.decimal_to_binary(first_minus1)
             
             while len(minus1_to_bin) < 32:
                 minus1_to_bin = "0" + minus1_to_bin
@@ -98,12 +98,26 @@ class Account:
                 elif bit == '1' :
                     swapped += '0'
             
-            output = binary_to_decimal(swapped) * -1
+            output = self.binary_to_decimal(swapped) * -1
             return output
     
     def check_balance(self):
+        return self._2scompliment_to_decimal(self.binary_balance)
         
-    def deposit_money(self, money):
+    def deposit_money(self, deposit):
+        current_balance = self.check_balance()
+        new_balance = current_balance + deposit
+        self.binary_balance = self.dec_to_32bit2scompliment(new_balance)
+        return f"Remaining: {new_balance}"
     
-    def withdraw_money(self, money):
+    def withdraw_money(self, withdraw):
+        current = self.check_balance()
+        if current - withdraw < -1500:
+            print("Error. Limit exceeded.")
+            return False
+        else:
+            new_balance = current - withdraw
+            self.binary_balance = self.dec_to_32bit2scompliment(new_balance)
+            print(f"Remaining: {new_balance}")
+            return True
         
