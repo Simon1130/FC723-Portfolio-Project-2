@@ -50,10 +50,10 @@ class Account:
         return ans
     
     def dec_to_32bit2scompliment(self, money):
-        
+#giving the absolute value
         if money < 0 :
             money *= -1
-#
+
             
             first_bin = self.decimal_to_binary(money)
             while len(first_bin) < 32 :
@@ -75,7 +75,7 @@ class Account:
             output = self.decimal_to_binary(money)
             
         while len(output) < 32 :
-            output = '0' + str(output)
+            output = '0' + str(output) #make it to 32 bit
             
         return output
     
