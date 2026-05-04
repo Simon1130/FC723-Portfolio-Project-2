@@ -35,6 +35,10 @@ def main():
                 print("User not found.\n")
                 continue
             
+            if user.is_locked == True:
+                print("Account was locked.\n")
+                continue
+            
             logged_in = False #initialise flag to false
             while user.num_tries < 3 and user.is_locked == False:
                 password = input(f"Please enter the password {3 - user.num_tries} tries left: ")
