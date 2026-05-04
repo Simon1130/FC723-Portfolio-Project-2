@@ -19,3 +19,10 @@ class TestBank(TestCase):
         
         self.assertTrue(len(user.password) >= 8, "Error. Password should be 8 - 16 characters: ")
         
+    def transfered_exceed(self):
+        self.bank.create_account("send", "12345678", 0)
+        self.bank.create_account("receive", "123456789", 100)
+        
+        send_acc = self.bank.user_dict["send"]
+        
+        
